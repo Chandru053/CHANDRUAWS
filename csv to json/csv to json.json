@@ -1,0 +1,41 @@
+{
+  "name" : "csv to json",
+  "description" : "",
+  "role" : "arn:aws:iam::870725480624:role/service-role/AWSGlueServiceRole",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-870725480624-us-east-1/scripts/csv to json.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--extra-py-files" : "s3://aws-glue-studio-transforms-510798373988-prod-us-east-1/gs_common.py,s3://aws-glue-studio-transforms-510798373988-prod-us-east-1/gs_extract_json.py",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-870725480624-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "false",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-870725480624-us-east-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 2880,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "4.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1700638186980\":{\"CatalogSource\":{\"Database\":\"target1 linking\",\"Name\":\"AWS Glue Data Catalog\",\"Table\":\"report_csv\"}},\"node-1700653887339\":{\"S3DirectTarget\":{\"Compression\":\"none\",\"Format\":\"json\",\"Inputs\":[\"node-1700653789447\"],\"Name\":\"Amazon S3\",\"PartitionKeys\":[],\"Path\":\"s3://project1etl/target output/\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}},\"node-1700653789447\":{\"DynamicTransform\":{\"FunctionName\":\"gs_extract_json\",\"Inputs\":[\"node-1700638186980\"],\"Name\":\"Extract JSON Path\",\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"personname\",\"Type\":\"string\"},{\"Name\":\"country\",\"Type\":\"string\"},{\"Name\":\"discipline\",\"Type\":\"string\"},{\"Name\":\"sum\",\"Type\":\"bigint\"},{\"Name\":\"avg\",\"Type\":\"bigint\"},{\"Name\":\"count\",\"Type\":\"bigint\"},{\"Name\":\"string\",\"Type\":\"string\"}]}],\"Parameters\":[{\"IsOptional\":false,\"Name\":\"colName\",\"Type\":\"str\",\"Value\":[\"personname\"]},{\"IsOptional\":false,\"Name\":\"jsonPaths\",\"Type\":\"str\",\"Value\":[\"commas\"]},{\"IsOptional\":false,\"Name\":\"colList\",\"Type\":\"str\",\"Value\":[\"string\"]}],\"Path\":\"s3://aws-glue-studio-transforms-510798373988-prod-us-east-1/gs_extract_json.py\",\"TransformName\":\"gs_extract_json\",\"Version\":\"1.0.0\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "CHANDRUAWS",
+    "branch" : "main",
+    "folder" : "csv to json"
+  }
+}
